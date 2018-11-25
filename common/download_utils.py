@@ -9,7 +9,10 @@ from common import tqdm_utils
 REPOSITORY_PATH = "https://github.com/hse-aml/natural-language-processing"
 
 
-def download_file(url, file_path):
+def download_file(url, file_path, force=False):
+    if os.path.exists(file_path) and not force:
+        print("File {} is already downloaded.".format(file_path))
+        return
     r = requests.get(url, stream=True)
     total_size = int(r.headers.get('content-length'))
     try:
@@ -82,6 +85,12 @@ def download_week3_resources(force=False):
         "data",
         force=force
     )
+    paths = ["GoogleNews-vectors-negative300.bin"]
+    paths.append(paths[0] + '.gz')
+    for p in paths:
+        if os.path.exists(p) and not force:
+            print("File {} is already downloaded.".format(p))
+            return
     print("Downloading GoogleNews-vectors-negative300.bin.gz (1.5G) for you, it will take a while...")
     download_file("https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz",
                   "GoogleNews-vectors-negative300.bin.gz")
