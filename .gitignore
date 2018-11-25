@@ -106,3 +106,5 @@ data/
 .idea
 week3/GoogleNews-vectors-negative300.bin
 week3/train_prepared.tsv
+week3/modelSaveFile
+week3/modelSaveFile.tsv
