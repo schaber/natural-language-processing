@@ -104,3 +104,5 @@ ENV/
 data/
 
 .idea
+week3/GoogleNews-vectors-negative300.bin
+week3/train_prepared.tsv
