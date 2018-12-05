@@ -49,12 +49,14 @@ def load_embeddings(embeddings_path):
     ########################
     #### YOUR CODE HERE ####
     ########################
+    embeddings = {}
+    for line in open(embeddings_path):
+        w, *vec = line.strip().split('\t')
+        embeddings[w] = np.fromstring(','.join(vec), sep=',', dtype=np.float32)
 
-    # remove this when you're done
-    raise NotImplementedError(
-        "Open utils.py and fill with your code. In case of Google Colab, download"
-        "(https://github.com/hse-aml/natural-language-processing/blob/master/project/utils.py), "
-        "edit locally and upload using '> arrow on the left edge' -> Files -> UPLOAD")
+    embeddings_dim = len(embeddings.values()[0])
+
+    return embeddings, embeddings_dim
 
 
 def question_to_vec(question, embeddings, dim):
@@ -66,11 +68,31 @@ def question_to_vec(question, embeddings, dim):
     #### YOUR CODE HERE ####
     ########################
 
-    # remove this when you're done
-    raise NotImplementedError(
-        "Open utils.py and fill with your code. In case of Google Colab, download"
-        "(https://github.com/hse-aml/natural-language-processing/blob/master/project/utils.py), "
-        "edit locally and upload using '> arrow on the left edge' -> Files -> UPLOAD")
+    """
+        question: a string
+        embeddings: dict where the key is a word and a value is its' embedding
+        dim: size of the representation
+
+        result: vector representation for the question
+    """
+    # assert embeddings.vector_size == dim
+    assert len(embeddings['word']) == dim
+    words = question.split(' ')
+    # vectors = np.array([embeddings[w] for w in (words & set(embeddings.vocab))])
+    vectors = []
+    for w in words:
+        try:
+            vectors.append(embeddings[w])
+        except KeyError:
+            pass
+    vectors = np.array(vectors)
+    if not vectors.shape[0]:
+        vectors = np.zeros(dim)
+    if len(vectors.shape) > 1:
+        ret_val = np.mean(vectors, axis=0)
+    else:
+        ret_val = vectors
+    return ret_val
 
 
 def unpickle_file(filename):

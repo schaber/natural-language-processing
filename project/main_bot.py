@@ -62,7 +62,8 @@ class SimpleDialogueManager(object):
     Your task is to create a more advanced one in dialogue_manager.py."
     """
     
-    def generate_answer(self, question): 
+    def generate_answer(self, question):
+        question
         return "Hello, world!" 
         
 

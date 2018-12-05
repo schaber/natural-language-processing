@@ -108,3 +108,7 @@ week3/GoogleNews-vectors-negative300.bin
 week3/train_prepared.tsv
 week3/modelSaveFile
 week3/modelSaveFile.tsv
+project/intent_recognizer.pkl
+project/tfidf_vectorizer.pkl
+project/tag_classifier.pkl
+project/word_embeddings.tsv

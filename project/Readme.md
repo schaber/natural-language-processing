@@ -1,0 +1,1 @@
+Run the 'Hello world' bot with the scripted provided for you: `python3 main_bot.py --token=YOUR_TOKEN`
