@@ -12,7 +12,8 @@ RESOURCE_PATH = {
     'TAG_CLASSIFIER': 'tag_classifier.pkl',
     'TFIDF_VECTORIZER': 'tfidf_vectorizer.pkl',
     'THREAD_EMBEDDINGS_FOLDER': 'thread_embeddings_by_tags',
-    'WORD_EMBEDDINGS': 'word_embeddings.tsv',
+    # 'WORD_EMBEDDINGS': 'word_embeddings.tsv',
+    'WORD_EMBEDDINGS': '../week3/modelSaveFile.tsv'
 }
 
 
@@ -75,8 +76,6 @@ def question_to_vec(question, embeddings, dim):
 
         result: vector representation for the question
     """
-    # assert embeddings.vector_size == dim
-    assert len(embeddings['word']) == dim
     words = question.split(' ')
     # vectors = np.array([embeddings[w] for w in (words & set(embeddings.vocab))])
     vectors = []
