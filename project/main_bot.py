@@ -63,7 +63,6 @@ class SimpleDialogueManager(object):
     """
     
     def generate_answer(self, question):
-        question
         return "Hello, world!" 
         
 

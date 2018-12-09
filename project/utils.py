@@ -54,7 +54,7 @@ def load_embeddings(embeddings_path):
         w, *vec = line.strip().split('\t')
         embeddings[w] = np.fromstring(','.join(vec), sep=',', dtype=np.float32)
 
-    embeddings_dim = len(embeddings.values()[0])
+    embeddings_dim = len(list(embeddings.values())[0])
 
     return embeddings, embeddings_dim
 
