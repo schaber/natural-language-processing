@@ -3,6 +3,7 @@ from sklearn.metrics.pairwise import pairwise_distances_argmin
 
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer
+from chatterbot.trainers import ListTrainer
 
 from utils import load_embeddings, question_to_vec, text_prepare, unpickle_file
 
@@ -39,7 +40,7 @@ class DialogueManager(object):
         self.intent_recognizer = unpickle_file(paths['INTENT_RECOGNIZER'])
         self.tfidf_vectorizer = unpickle_file(paths['TFIDF_VECTORIZER'])
 
-        self.ANSWER_TEMPLATE = 'I think its about %s\nThis thread might help you: https://stackoverflow.com/questions/%s'
+        self.ANSWER_TEMPLATE = 'I think your question is about %s\nThis thread might help you: https://stackoverflow.com/questions/%s'
 
         # Goal-oriented part:
         self.tag_classifier = unpickle_file(paths['TAG_CLASSIFIER'])
@@ -61,6 +62,12 @@ class DialogueManager(object):
         chatbot = ChatBot('ChatterBot')
         chatbot.set_trainer(ChatterBotCorpusTrainer)
         chatbot.train("chatterbot.corpus.english")
+        chatbot.set_trainer(ListTrainer)
+        chatbot.train(["Hey",
+                       "Hi, how are you?",
+                       "Fine, thanks.  How are you?"])
+        chatbot.train(["What is AI?",
+                       "If you mean artificial intelligence, some would say it is a human-made system that can perform a task that, if a human completed the same activity, we would say they had to apply intelligence to accomplish the task."])
 
         return chatbot
 
@@ -74,6 +81,9 @@ class DialogueManager(object):
         prepared_question = text_prepare(question)  #### YOUR CODE HERE ####
         features = self.tfidf_vectorizer.transform([prepared_question])  #### YOUR CODE HERE ####
         intent = self.intent_recognizer.predict(features)  #### YOUR CODE HERE ####
+        
+        if question.lower().strip() == "what is ai?":
+            intent = 'dialogue'
 
         # Chit-chat part:   
         if intent == 'dialogue':
