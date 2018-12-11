@@ -82,7 +82,11 @@ class DialogueManager(object):
         features = self.tfidf_vectorizer.transform([prepared_question])  #### YOUR CODE HERE ####
         intent = self.intent_recognizer.predict(features)  #### YOUR CODE HERE ####
         
-        if question.lower().strip() == "what is ai?":
+        if question.lower().strip() == "hey":
+            return 'Hi, how are you?'
+        elif question.lower().strip() == "what's your hobby?":
+            return 'I enjoy spending time with my family and riding bikes.'
+        elif question.lower().strip() == "what is ai?":
             intent = 'dialogue'
 
         # Chit-chat part:   
